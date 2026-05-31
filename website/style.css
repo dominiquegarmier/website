@@ -1,6 +1,6 @@
 :root {
-  --accent: #0057ff;
-  --accent-ink: #ffffff;
+  --accent: #f4f4f0;
+  --accent-ink: #080808;
   font-family: "Courier New", Courier, monospace;
   background: #f4f4f0;
   color: #080808;
@@ -62,12 +62,13 @@ a {
   width: min(100%, 1440px);
   min-height: calc(100vh - 49px);
   display: grid;
-  grid-template-rows: 1fr auto auto;
+  grid-template-rows: minmax(320px, min(52vh, 560px)) auto minmax(0, 1fr) auto;
   margin-inline: auto;
   padding: clamp(18px, 4vw, 54px);
 }
 
 .masthead {
+  grid-row: 1;
   align-self: stretch;
   display: grid;
   align-content: end;
@@ -86,6 +87,7 @@ h1 {
 }
 
 .text {
+  grid-row: 2;
   display: grid;
   grid-template-columns: 160px minmax(0, 1fr);
   gap: 20px;
@@ -104,9 +106,11 @@ h2 {
 }
 
 .copy {
+  min-width: 0;
   margin: 0;
   font-size: 24px;
   line-height: 1.35;
+  overflow-wrap: break-word;
 }
 
 .copy p {
@@ -118,10 +122,12 @@ h2 {
 }
 
 .text ul {
+  min-width: 0;
   margin: 0;
   padding-left: 20px;
   font-size: 24px;
   line-height: 1.35;
+  overflow-wrap: break-word;
 }
 
 .text li + li {
@@ -129,6 +135,8 @@ h2 {
 }
 
 .socials {
+  grid-row: 4;
+  align-self: end;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: clamp(20px, 4vw, 44px);
@@ -191,9 +199,25 @@ a:focus-visible {
 }
 
 @media (max-width: 700px) {
+  .about,
+  .page {
+    min-height: auto;
+    grid-template-rows: auto;
+  }
+
+  .masthead,
+  .text,
+  .socials {
+    grid-row: auto;
+  }
+
   .site-header nav {
     border-left: 0;
     border-right: 0;
+  }
+
+  h1 {
+    font-size: 50px;
   }
 
   .text {

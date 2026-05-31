@@ -8,7 +8,7 @@ Static personal website for GitHub Pages.
 bun run dev
 ```
 
-Open <http://localhost:8000>.
+Open the URL printed by Vite.
 
 ## Format
 

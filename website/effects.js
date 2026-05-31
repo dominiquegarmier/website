@@ -4,6 +4,29 @@
   const maxCommandLength = Math.max(...commands.map((item) => item.length));
   let command = "";
 
+  document.querySelectorAll(".site-header a").forEach((link) => {
+    link.addEventListener("pointerdown", (event) => {
+      if (
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
+
+      const target = new URL(link.href, location.href);
+
+      if (target.origin !== location.origin || target.href === location.href) {
+        return;
+      }
+
+      event.preventDefault();
+      location.assign(target.href);
+    });
+  });
+
   addEventListener("keydown", (event) => {
     if (event.metaKey || event.ctrlKey || event.altKey) return;
     const key = event.key.toLowerCase();
