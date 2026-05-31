@@ -57,6 +57,14 @@ a {
   color: var(--accent-ink);
 }
 
+.site-header nav:has(a:hover:not([aria-current="page"])) a[aria-current="page"],
+.site-header
+  nav:has(a:focus-visible:not([aria-current="page"]))
+  a[aria-current="page"] {
+  background: transparent;
+  color: inherit;
+}
+
 .about,
 .page {
   width: min(100%, 1440px);
