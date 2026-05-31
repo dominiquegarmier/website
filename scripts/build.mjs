@@ -2,7 +2,7 @@ import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const source = "website";
-const output = ".tmp/dist/website";
+const output = "dist";
 
 await rm(output, { force: true, recursive: true });
 await mkdir(output, { recursive: true });
