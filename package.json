@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "bun scripts/build.mjs",
+    "dev": "bunx serve website -l 8000",
+    "format": "bunx prettier --write \"README.md\" \"package.json\" \".github/**/*.yml\" \"scripts/**/*.mjs\" \"website/**/*.{html,css,js}\"",
+    "format:check": "bunx prettier --check \"README.md\" \"package.json\" \".github/**/*.yml\" \"scripts/**/*.mjs\" \"website/**/*.{html,css,js}\"",
+    "lint": "bun run format:check && bun run build"
+  }
+}
