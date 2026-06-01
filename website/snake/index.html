@@ -8,15 +8,18 @@
     <script src="/color-generator.js"></script>
     <script src="/scheme.js"></script>
     <link rel="stylesheet" href="/style.css" />
+    <script type="module" src="/effects.js"></script>
     <script type="module" src="snake.js"></script>
   </head>
   <body class="snake-training-page">
-    <a class="snake-back" href="/links/">&#60; back</a>
     <main class="snake-training" aria-label="Snake PPO training">
-      <h1 class="snake-title">
-        ppo playing snake
-        <a href="https://github.com/dominiquegarmier/snake">(c &amp; wasm)</a>
-      </h1>
+      <div class="snake-top">
+        <a class="snake-back" href="/links/">&#60; back</a>
+        <h1 class="snake-title">
+          ppo playing snake
+          <a href="https://github.com/dominiquegarmier/snake">(c &amp; wasm)</a>
+        </h1>
+      </div>
       <div id="snake-board" class="snake-board">loading snake...</div>
       <p class="snake-meta">
         <span

@@ -25,16 +25,6 @@ body.snake-training-page {
   color: #080808;
 }
 
-.snake-back {
-  position: fixed;
-  top: clamp(18px, 4vw, 54px);
-  left: clamp(18px, 4vw, 54px);
-  z-index: 1;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 14px;
-  text-transform: uppercase;
-}
-
 a {
   color: inherit;
 }
@@ -191,9 +181,26 @@ h2 {
   padding: clamp(18px, 4vw, 54px);
 }
 
-.snake-title {
+.snake-top {
   grid-row: 1;
   align-self: start;
+  display: grid;
+  grid-template-columns: minmax(70px, 1fr) auto minmax(70px, 1fr);
+  align-items: start;
+  width: 100%;
+}
+
+.snake-back {
+  justify-self: start;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.snake-title {
+  grid-column: 2;
+  max-width: min(100%, 680px);
   margin: 0;
   font:
     clamp(16px, 3.2vw, 28px) / 1.05 Menlo,
@@ -204,6 +211,7 @@ h2 {
   font-variant-ligatures: none;
   font-weight: 400;
   letter-spacing: 0;
+  text-align: center;
   text-transform: uppercase;
 }
 
@@ -321,5 +329,17 @@ a:focus-visible {
 
   .socials a:last-child {
     border-bottom: 0;
+  }
+
+  .snake-top {
+    grid-template-columns: 1fr;
+    justify-items: start;
+    gap: 18px;
+  }
+
+  .snake-title {
+    grid-column: auto;
+    justify-self: center;
+    max-width: 100%;
   }
 }

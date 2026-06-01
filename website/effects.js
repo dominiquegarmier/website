@@ -1,6 +1,11 @@
 (() => {
   const rainbowKey = "dominique-garmier-accent-rainbow";
-  const commands = [":party", ":rainbow", ":snake"];
+  const actions = {
+    ":party": confetti,
+    ":rainbow": rainbow,
+    ":snake": () => location.assign("/snake/"),
+  };
+  const commands = Object.keys(actions);
   const maxCommandLength = Math.max(...commands.map((item) => item.length));
   let command = "";
 
@@ -31,6 +36,11 @@
     if (event.metaKey || event.ctrlKey || event.altKey) return;
     const key = event.key.toLowerCase();
 
+    if (key === "escape") {
+      command = "";
+      return;
+    }
+
     if (key === ":") {
       command = ":";
       return;
@@ -38,7 +48,8 @@
 
     if (!command) return;
 
-    if (key === "escape" || key === "enter") {
+    if (key === "enter") {
+      actions[command]?.();
       command = "";
       return;
     }
@@ -52,19 +63,7 @@
 
     command += key;
 
-    if (command === ":party") {
-      confetti();
-    }
-
-    if (command === ":rainbow") {
-      rainbow();
-    }
-
-    if (command === ":snake") {
-      location.assign("/snake/");
-    }
-
-    if (commands.includes(command) || command.length > maxCommandLength) {
+    if (command.length > maxCommandLength) {
       command = "";
     }
   });
