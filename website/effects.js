@@ -1,5 +1,11 @@
 (() => {
-  const rainbowKey = "dominique-garmier-accent-rainbow";
+  const accentKey = "dominique-garmier-accent";
+  const accentInkKey = `${accentKey}-ink`;
+  const rainbowKey = `${accentKey}-rainbow`;
+  const beforeRainbowAccentKey = `${accentKey}-before-rainbow`;
+  const beforeRainbowAccentInkKey = `${beforeRainbowAccentKey}-ink`;
+  const rainbowAccent = "oklch(64% 0.28 290)";
+  const rainbowAccentInk = "#080808";
   const actions = {
     ":party": confetti,
     ":rainbow": rainbow,
@@ -70,8 +76,54 @@
 
   function rainbow() {
     const enabled = !document.documentElement.classList.contains("rainbow");
+
+    if (enabled) {
+      const accent = sessionStorage.getItem(accentKey);
+      const accentInk = sessionStorage.getItem(accentInkKey);
+
+      if (accent !== rainbowAccent) {
+        sessionStorage.setItem(beforeRainbowAccentKey, accent ?? "");
+        sessionStorage.setItem(beforeRainbowAccentInkKey, accentInk ?? "");
+      }
+
+      setAccent(rainbowAccent, rainbowAccentInk);
+    } else {
+      const accent = sessionStorage.getItem(beforeRainbowAccentKey);
+      const accentInk = sessionStorage.getItem(beforeRainbowAccentInkKey);
+
+      if (accent && accentInk) {
+        setAccent(accent, accentInk);
+      } else {
+        setAccent(...generatePlainAccent());
+      }
+
+      sessionStorage.removeItem(beforeRainbowAccentKey);
+      sessionStorage.removeItem(beforeRainbowAccentInkKey);
+    }
+
     document.documentElement.classList.toggle("rainbow", enabled);
     sessionStorage.setItem(rainbowKey, enabled ? "1" : "0");
+  }
+
+  function setAccent(accent, accentInk) {
+    sessionStorage.setItem(accentKey, accent);
+    sessionStorage.setItem(accentInkKey, accentInk);
+    document.documentElement.style.setProperty("--accent", accent);
+    document.documentElement.style.setProperty("--accent-ink", accentInk);
+  }
+
+  function generatePlainAccent() {
+    if (!window.generateAccent) return ["#080808", "#ffffff"];
+
+    for (let attempt = 0; attempt < 10; attempt += 1) {
+      const accent = window.generateAccent();
+
+      if (!accent.rainbow) {
+        return [accent.color, accent.ink];
+      }
+    }
+
+    return ["oklch(64% 0.24 180)", "#080808"];
   }
 
   function confetti() {
