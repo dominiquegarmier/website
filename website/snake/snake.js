@@ -3,7 +3,12 @@ const rate = document.querySelector("#snake-rate");
 const score = document.querySelector("#snake-score");
 const best = document.querySelector("#snake-best");
 const time = document.querySelector("#snake-time");
+const meta = document.querySelector(".snake-meta");
+const stats = document.querySelectorAll(".snake-stat-value");
 const glyphs = [".", "o", "#", "*"];
+const baseRows = [];
+const overlayRows = [];
+let boardReady = false;
 
 const worker = new Worker(new URL("./snake-worker.js", import.meta.url), {
   type: "module",
@@ -19,11 +24,12 @@ worker.addEventListener("message", (event) => {
 
   if (message.type !== "snapshot") return;
 
-  board.replaceChildren(renderBoard(message.cells));
+  updateBoard(message.cells);
   rate.textContent = message.sampleRate.toFixed(0);
   score.textContent = message.score.toFixed(2);
   best.textContent = message.best;
   time.textContent = message.elapsed.toFixed(1);
+  syncStatRainbow();
 });
 
 addEventListener("pagehide", () => {
@@ -31,27 +37,51 @@ addEventListener("pagehide", () => {
   worker.terminate();
 });
 
-function renderBoard(cells) {
-  const fragment = document.createDocumentFragment();
+function initBoard() {
+  const layers = document.createElement("div");
+  const base = document.createElement("div");
+  const overlay = document.createElement("div");
 
-  fragment.append(renderTextLine("+--------+"));
+  layers.className = "snake-board-layers";
+  base.className = "snake-board-base";
+  overlay.className = "snake-board-overlay";
 
-  for (let y = 0; y < 8; y += 1) {
-    const row = document.createElement("div");
-    row.className = "snake-row";
-    row.append("|");
-
-    for (let x = 0; x < 8; x += 1) {
-      row.append(renderCell(cells[y * 8 + x]));
-    }
-
-    row.append("|");
-    fragment.append(row);
+  for (let index = 0; index < 10; index += 1) {
+    const baseLine = renderTextLine("");
+    const overlayLine = renderTextLine("");
+    baseRows.push(baseLine);
+    overlayRows.push(overlayLine);
+    base.append(baseLine);
+    overlay.append(overlayLine);
   }
 
-  fragment.append(renderTextLine("+--------+"));
+  layers.append(base, overlay);
+  board.replaceChildren(layers);
+  boardReady = true;
+}
 
-  return fragment;
+function updateBoard(cells) {
+  if (!boardReady) initBoard();
+
+  baseRows[0].textContent = "+--------+";
+  overlayRows[0].textContent = "          ";
+
+  for (let y = 0; y < 8; y += 1) {
+    let baseRow = "|";
+    let overlayRow = " ";
+
+    for (let x = 0; x < 8; x += 1) {
+      const cell = cells[y * 8 + x];
+      baseRow += cell > 0 ? " " : ".";
+      overlayRow += cell > 0 ? glyphs[cell] : " ";
+    }
+
+    baseRows[y + 1].textContent = `${baseRow}|`;
+    overlayRows[y + 1].textContent = `${overlayRow} `;
+  }
+
+  baseRows[9].textContent = "+--------+";
+  overlayRows[9].textContent = "          ";
 }
 
 function renderTextLine(text) {
@@ -60,13 +90,16 @@ function renderTextLine(text) {
   return line;
 }
 
-function renderCell(cell) {
-  if (cell === 2 || cell === 3) {
-    const span = document.createElement("span");
-    span.className = cell === 2 ? "snake-head" : "snake-food";
-    span.textContent = glyphs[cell];
-    return span;
-  }
+function syncStatRainbow() {
+  const metaBox = meta.getBoundingClientRect();
 
-  return glyphs[cell] ?? ".";
+  for (const stat of stats) {
+    const statBox = stat.getBoundingClientRect();
+    const offset = statBox.left - metaBox.left;
+    stat.style.setProperty("--rainbow-size", `${metaBox.width * 3}px`);
+    stat.style.setProperty("--rainbow-start", `${-offset}px`);
+    stat.style.setProperty("--rainbow-end", `${metaBox.width * 3 - offset}px`);
+  }
 }
+
+addEventListener("resize", syncStatRainbow);

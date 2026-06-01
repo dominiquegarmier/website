@@ -229,6 +229,22 @@ h2 {
   white-space: nowrap;
 }
 
+.snake-board-layers {
+  position: relative;
+}
+
+.snake-board-base,
+.snake-board-overlay {
+  white-space: pre;
+}
+
+.snake-board-overlay {
+  position: absolute;
+  inset: 0;
+  color: var(--accent);
+  pointer-events: none;
+}
+
 .snake-meta {
   grid-row: 4;
   align-self: end;
@@ -248,9 +264,43 @@ h2 {
   color: var(--accent);
 }
 
-.snake-head,
-.snake-food {
-  color: var(--accent);
+.rainbow .snake-board-overlay {
+  animation: rainbow-slide 2s linear infinite;
+  background: linear-gradient(
+    90deg,
+    red,
+    #ff8c00,
+    #d6d600,
+    lime,
+    cyan,
+    blue,
+    magenta,
+    red
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.rainbow .snake-stat-value {
+  animation: snake-stat-rainbow 2s linear infinite;
+  background: linear-gradient(
+    90deg,
+    red,
+    #ff8c00,
+    #d6d600,
+    lime,
+    cyan,
+    blue,
+    magenta,
+    red
+  );
+  background-size: var(--rainbow-size, 300%) 100%;
+  background-position: var(--rainbow-start, 0) 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 a:hover,
@@ -289,6 +339,12 @@ a:focus-visible {
 @keyframes rainbow-slide {
   to {
     background-position: 300% 0;
+  }
+}
+
+@keyframes snake-stat-rainbow {
+  to {
+    background-position: var(--rainbow-end, 300%) 0;
   }
 }
 

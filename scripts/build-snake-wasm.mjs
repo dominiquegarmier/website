@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const source = resolve(root, "scripts/snake-web.c");
+const source = resolve(root, "website/snake/snake-web.c");
 const output = resolve(root, "website/snake/snake-wasm.js");
 const wasm = resolve(root, "website/snake/snake-wasm.wasm");
 

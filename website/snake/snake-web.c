@@ -6,7 +6,7 @@
 #endif
 
 #define main snake_cli_main
-#include "../vendor/snake/snake.c"
+#include "../../vendor/snake/snake.c"
 #undef main
 
 enum {
