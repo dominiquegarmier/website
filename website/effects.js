@@ -1,6 +1,6 @@
 (() => {
   const rainbowKey = "dominique-garmier-accent-rainbow";
-  const commands = [":party", ":rainbow"];
+  const commands = [":party", ":rainbow", ":snake"];
   const maxCommandLength = Math.max(...commands.map((item) => item.length));
   let command = "";
 
@@ -58,6 +58,10 @@
 
     if (command === ":rainbow") {
       rainbow();
+    }
+
+    if (command === ":snake") {
+      location.assign("/snake/");
     }
 
     if (commands.includes(command) || command.length > maxCommandLength) {

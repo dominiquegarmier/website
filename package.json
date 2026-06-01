@@ -1,10 +1,11 @@
 {
   "private": true,
   "scripts": {
-    "build": "vite build",
-    "dev": "vite --host 0.0.0.0",
-    "format": "bunx prettier --write \"README.md\" \"package.json\" \"vite.config.mjs\" \".github/**/*.yml\" \"website/**/*.{html,css,js}\"",
-    "format:check": "bunx prettier --check \"README.md\" \"package.json\" \"vite.config.mjs\" \".github/**/*.yml\" \"website/**/*.{html,css,js}\"",
+    "build": "bun run build:snake && vite build",
+    "build:snake": "bun scripts/build-snake-wasm.mjs",
+    "dev": "bun run build:snake && vite --host 0.0.0.0",
+    "format": "bunx prettier --write \"README.md\" \"package.json\" \"vite.config.mjs\" \"scripts/**/*.mjs\" \".github/**/*.yml\" \"website/**/*.{html,css,js}\"",
+    "format:check": "bunx prettier --check \"README.md\" \"package.json\" \"vite.config.mjs\" \"scripts/**/*.mjs\" \".github/**/*.yml\" \"website/**/*.{html,css,js}\"",
     "lint": "bun run format:check && bun run build"
   },
   "devDependencies": {

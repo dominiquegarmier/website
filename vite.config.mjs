@@ -10,7 +10,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(import.meta.dirname, "website/index.html"),
-        links: resolve(import.meta.dirname, "website/links.html"),
+        links: resolve(import.meta.dirname, "website/links/index.html"),
+        snake: resolve(import.meta.dirname, "website/snake/index.html"),
         notFound: resolve(import.meta.dirname, "website/404.html"),
       },
     },

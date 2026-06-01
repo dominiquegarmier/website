@@ -1,2 +1,4 @@
 dist/
 node_modules/
+website/snake/snake-wasm.js
+website/snake/snake-wasm.wasm

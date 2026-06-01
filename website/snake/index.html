@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Snake - Dominique Garmier</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script src="/color-generator.js"></script>
+    <script src="/scheme.js"></script>
+    <link rel="stylesheet" href="/style.css" />
+    <script type="module" src="snake.js"></script>
+  </head>
+  <body class="snake-training-page">
+    <a class="snake-back" href="/links/">&#60; back</a>
+    <main class="snake-training" aria-label="Snake PPO training">
+      <h1 class="snake-title">
+        ppo playing snake
+        <a href="https://github.com/dominiquegarmier/snake">(c &amp; wasm)</a>
+      </h1>
+      <div id="snake-board" class="snake-board">loading snake...</div>
+      <p class="snake-meta">
+        <span
+          ><span id="snake-rate" class="snake-stat-value">-</span>
+          sample/s</span
+        >
+        <span
+          >score <span id="snake-score" class="snake-stat-value">-</span></span
+        >
+        <span
+          >best <span id="snake-best" class="snake-stat-value">-</span></span
+        >
+        <span
+          >time <span id="snake-time" class="snake-stat-value">-</span></span
+        >
+        <span>
+          <a href="https://github.com/dominiquegarmier/snake">source</a>
+        </span>
+      </p>
+    </main>
+  </body>
+</html>
